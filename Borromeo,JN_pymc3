@@ -1,0 +1,24 @@
+@author: jessb
+
+import numpy as np
+from sklearn.linear_model import BayesianRidge
+import matplotlib.pyplot as plt
+
+np.random.seed(0)
+X = np.linspace(0, 10, 100)
+y = 2*X + np.random.normal(0, 1, 100)
+
+model = BayesianRidge()
+model.fit(X.reshape(-1, 1), y)
+
+X_test = np.linspace(0, 10, 100)
+y_pred, y_std = model.predict(X_test.reshape(-1, 1), return_std=True)
+
+plt.scatter(X, y, label='Actual')
+plt.plot(X_test, y_pred, color='red', label='Predicted')
+plt.fill_between(X_test, y_pred - y_std, y_pred + y_std, color='gray', alpha=0.3, label='Uncertainty')
+plt.legend()
+plt.xlabel('X')
+plt.ylabel('y')
+plt.title('Bayesian Regression')
+plt.show()

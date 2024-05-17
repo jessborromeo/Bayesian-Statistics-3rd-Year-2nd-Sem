@@ -1,0 +1,23 @@
+import numpy as np
+# Define the coin flip function (assuming a fair coin)
+def flip_coin():
+return np.random.choice([0, 1]) # 0 for tails, 1 for heads
+# Number of coin flips
+flips = 10
+# Initialize prior (uniform distribution)
+prior = np.ones(2) / 2 # Probability of heads and tails (both 0.5)
+# Perform coin flips and update likelihood for each flip
+for _ in range(flips):
+# Flip the coin and get the outcome (0 or 1)
+outcome = flip_coin()
+# Update likelihood based on the outcome (heads or tails)
+likelihood = np.array([0.5, 0.5]) # Likelihood for heads and tails
+likelihood[outcome] = 1 # Set likelihood to 1 for observed outcome
+# Apply Bayes' theorem (assuming equal prior weights)
+posterior = prior * likelihood
+posterior /= np.sum(posterior) # Normalize posterior probabilities
+# Update prior for the next iteration (becomes the new prior)
+prior = posterior
+# Print the final posterior distribution (belief after all flips)
+print("Posterior probability of heads:", posterior[1])
+print("Posterior probability of tails:", posterior[0])
